@@ -1,0 +1,35 @@
+{
+  "short_name": "Food Delivery | Space Digitalia",
+  "name": "Food Delivery | Space Digitalia",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "prefer_related_applications": false,
+  "categories": ["food", "delivery", "space", "digitalia", "rizki", "ramadhan"],
+  "screenshots": [
+    {
+      "src": "/icon.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ],
+  "description": "Food Delivery | Space Digitalia"
+}
