@@ -86,7 +86,7 @@ export default function DiscountContent() {
 
     const loadCategories = async () => {
         try {
-            const categoriesSnapshot = await getDocs(collection(db, 'categoriesProducts'));
+            const categoriesSnapshot = await getDocs(collection(db, process.env.NEXT_PUBLIC_COLLECTIONS_CATEGORIES_DISCOUNTS as string));
             const categoriesList = categoriesSnapshot.docs.map(doc => doc.data().name);
             setCategories(categoriesList);
         } catch (error) {

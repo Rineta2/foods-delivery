@@ -9,8 +9,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { compressImage } from "@/components/helper/imageCompression";
-
 import imagekitInstance from "@/utils/imagekit";
 
 import { Banner } from "@/components/dashboard/super-admins/layout/home/lib/interface";
@@ -20,9 +18,6 @@ const COLLECTION_NAME = process.env.NEXT_PUBLIC_COLLECTIONS_BANNERS as string;
 export const bannerService = {
   async uploadImage(file: File) {
     try {
-      // Compress image first
-      const compressedFile = await compressImage(file);
-
       // Convert to base64
       const reader = new FileReader();
       return new Promise((resolve, reject) => {
@@ -45,7 +40,7 @@ export const bannerService = {
           }
         };
         reader.onerror = (error) => reject(error);
-        reader.readAsDataURL(compressedFile);
+        reader.readAsDataURL(file);
       });
     } catch {
       throw new Error("Failed to upload image");

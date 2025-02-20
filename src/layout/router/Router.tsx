@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+
+import Banner from '@/components/ui/banner/Banner'
+import Discount from '@/components/ui/discount/Discount'
 
 export default function Router() {
     return (
-        <div>Router</div>
+        <Fragment>
+            <Banner />
+            <Discount />
+        </Fragment>
     )
 }

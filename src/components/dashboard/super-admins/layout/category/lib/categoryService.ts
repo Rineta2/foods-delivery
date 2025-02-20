@@ -9,8 +9,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-// Make sure this matches exactly with your .env.local
-const COLLECTION_NAME = "categoriesProducts";
+const COLLECTION_NAME = process.env
+  .NEXT_PUBLIC_COLLECTIONS_CATEGORIES_DISCOUNTS as string;
 
 export const categoryService = {
   async createCategory(categoryData: { name: string }) {
