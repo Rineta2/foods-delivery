@@ -30,13 +30,13 @@ export const menuItems = [
       },
 
       {
-        label: "Category",
-        href: "/dashboard/super-admins/layout/category",
+        label: "Category Discount",
+        href: "/dashboard/super-admins/layout/category-discount",
       },
 
       {
-        label: "Brand",
-        href: "/dashboard/super-admins/layout/brand",
+        label: "Category Product",
+        href: "/dashboard/super-admins/layout/category-product",
       },
 
       {
