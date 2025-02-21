@@ -6,7 +6,10 @@ import { Discount } from "@/components/ui/discount/lib/interface";
 
 export const fetchDiscounts = async (): Promise<Discount[]> => {
   try {
-    const discountsRef = collection(db, "discounts");
+    const discountsRef = collection(
+      db,
+      process.env.NEXT_PUBLIC_COLLECTIONS_DISCOUNTS as string
+    );
     const q = query(discountsRef, where("isActive", "==", true));
     const querySnapshot = await getDocs(q);
 

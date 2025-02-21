@@ -1,9 +1,13 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import { Swiper as SwiperType } from 'swiper';
+
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
@@ -21,7 +25,6 @@ export default function Banner() {
     const swiperRef = React.useRef<SwiperType | undefined>(undefined);
 
     useEffect(() => {
-        // Subscribe to realtime updates
         const unsubscribe = subscribeToBanners((newBanners) => {
             setBanners(newBanners);
             setLoading(false);

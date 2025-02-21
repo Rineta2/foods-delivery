@@ -22,7 +22,7 @@ export const menuItems = [
     label: "Layout",
     href: "/dashboard/super-admins/layout",
     subItems: [
-      { label: "Home", href: "/dashboard/super-admins/layout/home" },
+      { label: "Banner", href: "/dashboard/super-admins/layout/banner" },
 
       {
         label: "Discount",
@@ -40,8 +40,8 @@ export const menuItems = [
       },
 
       {
-        label: "Banner",
-        href: "/dashboard/super-admins/layout/banner",
+        label: "Brand",
+        href: "/dashboard/super-admins/layout/brand",
       },
 
       {

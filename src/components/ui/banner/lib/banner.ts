@@ -1,7 +1,6 @@
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/utils/firebase";
-
 export interface Banner {
   id: string;
   title: string;
@@ -11,7 +10,10 @@ export interface Banner {
 }
 
 export function subscribeToBanners(callback: (banners: Banner[]) => void) {
-  const bannersCollection = collection(db, "banners");
+  const bannersCollection = collection(
+    db,
+    process.env.NEXT_PUBLIC_COLLECTIONS_BANNERS as string
+  );
   const bannersQuery = query(bannersCollection, where("isActive", "==", true));
 
   // Return unsubscribe function

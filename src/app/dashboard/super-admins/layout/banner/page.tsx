@@ -5,8 +5,8 @@ import { Metadata } from 'next'
 import HomeContent from "@/components/dashboard/super-admins/layout/home/HomeContent"
 
 export const metadata: Metadata = {
-    title: "Food Delivery | Home",
-    description: "Home Page of Food Delivery",
+    title: "Food Delivery | Banner",
+    description: "Banner Page of Food Delivery",
 }
 
 export default function HomePage() {
