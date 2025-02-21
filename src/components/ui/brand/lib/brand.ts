@@ -2,15 +2,9 @@ import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/utils/firebase";
 
-export interface Brand {
-  id: string;
-  title: string;
-  createdAt: string;
-  imageUrl: string;
-  isActive: boolean;
-}
+import { Brand } from "@/components/ui/brand/lib/interface";
 
-export function subscribeToBrands(callback: (brands: Brand[]) => void) {
+export function FetchBrands(callback: (brands: Brand[]) => void) {
   const brandsCollection = collection(
     db,
     process.env.NEXT_PUBLIC_COLLECTIONS_BRANDS as string
