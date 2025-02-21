@@ -18,7 +18,8 @@ const Pathname = ({ children }: { children: React.ReactNode }) => {
         pathname?.includes("/auth") ||
         pathname?.includes("/payment") ||
         pathname?.includes("/transaction/pending") ||
-        pathname?.includes("/transaction/success") || false;
+        pathname?.includes("/transaction/success") ||
+        pathname?.includes("/dashboard") || false;
 
     return (
         <main>

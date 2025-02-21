@@ -12,15 +12,24 @@ import SellerHeader from "@/layout/dashboard/seller/Header";
 
 import UserHeader from "@/layout/dashboard/user/Header";
 
+import AccessDenied from "@/layout/dashboard/AccessDenied";
+
 export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     const { hasRole, user } = useAuth();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+        // Check if window exists (client-side) and set initial state based on screen width
+        if (typeof window !== 'undefined') {
+            return window.innerWidth >= 1024; // 1024px is the 'lg' breakpoint in Tailwind
+        }
+        return false; // Default to closed on server-side
+    });
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [currentRole, setCurrentRole] = useState<Role | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!user) {
@@ -28,12 +37,30 @@ export default function DashboardLayout({
             return;
         }
 
-        // Check role priority
-        if (hasRole(Role.SUPER_ADMIN)) {
+        // Get current path
+        const currentPath = window.location.pathname;
+
+        // Check role priority and validate access
+        if (currentPath.startsWith('/dashboard/super-admins')) {
+            if (!hasRole(Role.SUPER_ADMIN)) {
+                setIsAuthorized(false);
+                setLoading(false);
+                return;
+            }
             setCurrentRole(Role.SUPER_ADMIN);
-        } else if (hasRole(Role.SELLER)) {
+        } else if (currentPath.startsWith('/dashboard/seller')) {
+            if (!hasRole(Role.SELLER)) {
+                setIsAuthorized(false);
+                setLoading(false);
+                return;
+            }
             setCurrentRole(Role.SELLER);
-        } else if (hasRole(Role.USER)) {
+        } else if (currentPath.startsWith('/dashboard/user')) {
+            if (!hasRole(Role.USER)) {
+                setIsAuthorized(false);
+                setLoading(false);
+                return;
+            }
             setCurrentRole(Role.USER);
         } else {
             window.location.href = '/';
@@ -41,10 +68,25 @@ export default function DashboardLayout({
         }
 
         setIsAuthorized(true);
+        setLoading(false);
     }, [hasRole, user]);
 
-    if (!isAuthorized) {
+    // Add resize listener to handle responsive behavior
+    useEffect(() => {
+        const handleResize = () => {
+            setIsSidebarOpen(window.innerWidth >= 1024);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    if (loading) {
         return null;
+    }
+
+    if (!isAuthorized) {
+        return <AccessDenied />;
     }
 
     const renderHeader = () => {
