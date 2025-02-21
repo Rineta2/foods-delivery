@@ -36,7 +36,7 @@ export default function Banner() {
 
     return (
         <section className='min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] lg:min-h-screen flex items-center justify-center mt-20 sm:mt-10'>
-            <div className="container mx-auto overflow-hidden relative px-0 sm:px-5">
+            <div className="container mx-auto overflow-hidden relative ">
                 <Swiper
                     onSwiper={(swiper) => {
                         swiperRef.current = swiper;

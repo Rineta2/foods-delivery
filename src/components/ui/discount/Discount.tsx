@@ -10,8 +10,6 @@ import { fetchDiscounts } from '@/components/ui/discount/lib/discountService'
 
 import Image from 'next/image'
 
-import { RiDiscountPercentFill } from "react-icons/ri";
-
 export default function Discount() {
     const [discounts, setDiscounts] = useState<DiscountType[]>([])
     const [loading, setLoading] = useState(true)
@@ -50,7 +48,7 @@ export default function Discount() {
             <div className="container">
                 <div className="flex flex-col sm:flex-row sm:justify-between justify-start items-start sm:items-center gap-6">
                     <h2 className='text-2xl sm:text-3xl font-extrabold flex gap-2 sm:flex-row flex-wrap'>
-                        Up to -40% <RiDiscountPercentFill className='text-red-500 text-2xl' /> Food exclusive deals
+                        Up to -40% 🎊 Order.uk exclusive deals
                     </h2>
 
                     <div className="flex items-center gap-4 overflow-x-auto sm:overflow-x-visible pb-2">

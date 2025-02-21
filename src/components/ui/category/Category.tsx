@@ -10,17 +10,18 @@ import { fetchCategoryProducts } from '@/components/ui/category/lib/categoryServ
 
 import Image from 'next/image'
 
-import { RiDiscountPercentFill } from "react-icons/ri";
-
 export default function Category() {
     const [categoryProducts, setCategoryProducts] = useState<CategoryProduct[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const loadCategoryProducts = async () => {
-            const data = await fetchCategoryProducts()
-            setCategoryProducts(data)
-            setLoading(false)
+            const unsubscribe = await fetchCategoryProducts((products) => {
+                setCategoryProducts(products)
+                setLoading(false)
+            })
+
+            return () => unsubscribe()
         }
 
         loadCategoryProducts()
@@ -29,32 +30,32 @@ export default function Category() {
     if (loading) return <CategorySkelaton />
 
     return (
-        <section className='min-h-full px-4 lg:px-6 mt-16'>
+        <section className='min-h-full px-4 lg:px-6 mt-10'>
             <div className="container">
-                <div className="flex flex-col sm:flex-row sm:justify-between justify-start items-start sm:items-center gap-6">
-                    <h2 className='text-2xl sm:text-3xl font-extrabold flex gap-2 sm:flex-row flex-wrap'>
-                        Up to -40% <RiDiscountPercentFill className='text-red-500 text-2xl' /> Food exclusive deals
+                <div className="flex flex-col sm:flex-row sm:justify-between justify-start items-start sm:items-center gap-4">
+                    <h2 className='text-xl md:text-2xl lg:text-3xl font-extrabold flex items-center gap-2 flex-wrap'>
+                        Order.uk Popular Categories 🤩
                     </h2>
                 </div>
 
-                <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-10'>
+                <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-4 mt-6 md:mt-10'>
                     {categoryProducts.map((categoryProduct) => (
                         <div
-                            className="relative rounded-lg overflow-hidden w-full"
+                            className="relative rounded-lg w-full overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                             key={categoryProduct.id}
                         >
-                            <div className='w-full h-full relative z-[-1]'>
+                            <div className='w-full aspect-[3/3] relative'>
                                 <Image
                                     src={categoryProduct.imageUrl}
                                     alt={categoryProduct.title}
-                                    width={500}
-                                    height={500}
-                                    className='object-cover w-full h-[200px] sm:h-[250px]'
+                                    fill
+                                    className='object-cover'
                                 />
                             </div>
 
-                            <div className='w-full h-[100px] bg-[#f5f5f5] flex items-end justify-start px-4 py-6'>
-                                <h3 className='text-black text-lg font-bold'>{categoryProduct.title}</h3>
+                            <div className='w-full bg-[#f5f5f5] p-3 md:p-4'>
+                                <h3 className='text-title text-base font-bold line-clamp-2'>{categoryProduct.title}</h3>
+                                <span className='text-primary text-sm'>21 Restaurants</span>
                             </div>
                         </div>
                     ))}
