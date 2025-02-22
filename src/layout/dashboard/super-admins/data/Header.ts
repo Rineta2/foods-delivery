@@ -50,8 +50,8 @@ export const menuItems = [
       },
 
       {
-        label: "FAQ",
-        href: "/dashboard/super-admins/layout/faq",
+        label: "FAQS",
+        href: "/dashboard/super-admins/layout/faqs",
       },
     ],
   },

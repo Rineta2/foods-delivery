@@ -291,9 +291,9 @@ export default function PartnerContent() {
 
     return (
         <section className='min-h-full py-0 px-0 sm:py-4 sm:px-4'>
-            <div className="container">
+            <>
                 {/* Header Section with modern styling */}
-                <div className="bg-white rounded-xl">
+                <div className="bg-white rounded-xl mb-6">
                     <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
                         <div className="space-y-4">
                             <h1 className="text-3xl font-bold text-gray-900">Partner Management</h1>
@@ -688,7 +688,7 @@ export default function PartnerContent() {
                         )}
                     </div>
                 </dialog>
-            </div>
+            </>
         </section>
     );
 }

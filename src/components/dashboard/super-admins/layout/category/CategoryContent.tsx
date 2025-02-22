@@ -130,7 +130,7 @@ export default function CategoryPage() {
             {isLoading ? (
                 <CategorySkelaton />
             ) : (
-                <div className="container">
+                <>
                     {/* Header Section - Updated styling */}
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white rounded-xl shadow-sm">
                         <h1 className="text-2xl font-bold text-gray-800">Category Management</h1>
@@ -314,7 +314,7 @@ export default function CategoryPage() {
                             <button disabled={deleteLoading}>close</button>
                         </form>
                     </dialog>
-                </div>
+                </>
             )}
         </section>
     );

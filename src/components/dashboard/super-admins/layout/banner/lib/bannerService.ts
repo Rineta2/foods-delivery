@@ -11,7 +11,7 @@ import {
 
 import imagekitInstance from "@/utils/imagekit";
 
-import { Banner } from "@/components/dashboard/super-admins/layout/home/lib/interface";
+import { Banner } from "@/components/dashboard/super-admins/layout/banner/lib/interface";
 
 const COLLECTION_NAME = process.env.NEXT_PUBLIC_COLLECTIONS_BANNERS as string;
 

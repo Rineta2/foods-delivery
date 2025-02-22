@@ -2,15 +2,15 @@ import React from 'react'
 
 import { Metadata } from 'next'
 
-import HomeContent from "@/components/dashboard/super-admins/layout/home/HomeContent"
+import BannerContent from "@/components/dashboard/super-admins/layout/banner/BannerContent"
 
 export const metadata: Metadata = {
     title: "Food Delivery | Banner",
     description: "Banner Page of Food Delivery",
 }
 
-export default function HomePage() {
+export default function BannerPage() {
     return (
-        <HomeContent />
+        <BannerContent />
     )
 }

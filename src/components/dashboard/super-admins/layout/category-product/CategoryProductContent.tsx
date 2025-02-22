@@ -8,7 +8,7 @@ import { CategoryProduct } from './lib/interface'
 
 import { categoryProductService } from '@/components/dashboard/super-admins/layout/category-product/lib/categoryProductService'
 
-import DiscountSkelaton from '@/components/dashboard/super-admins/layout/discount/DiscountSkelaton'
+import CategoryProductSkelaton from '@/components/dashboard/super-admins/layout/category-product/CategoryProductSkelaton'
 
 import Image from 'next/image'
 
@@ -242,12 +242,12 @@ export default function CategoryProductContent() {
     };
 
     if (isLoading) {
-        return <DiscountSkelaton />;
+        return <CategoryProductSkelaton />;
     }
 
     return (
         <section className='min-h-full py-0 px-0 sm:py-4 sm:px-4'>
-            <div className="container">
+            <>
                 {/* Add/Edit Modal */}
                 <dialog id="discount_modal" className="modal">
                     <div className="modal-box bg-white max-w-2xl p-6">
@@ -527,7 +527,7 @@ export default function CategoryProductContent() {
                         />
                     </div>
                 )}
-            </div>
+            </>
         </section>
     );
 }

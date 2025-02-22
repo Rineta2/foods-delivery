@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function BrandSkelaton() {
+export default function BannerSkelaton() {
     return (
         <section className='min-h-full py-0 px-0 sm:py-4 sm:px-4'>
             {/* Header Section Skeleton */}

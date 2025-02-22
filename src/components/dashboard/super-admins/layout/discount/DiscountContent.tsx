@@ -274,7 +274,7 @@ export default function DiscountContent() {
 
     return (
         <section className='min-h-full py-0 px-0 sm:py-4 sm:px-4'>
-            <div className="container">
+            <>
                 {/* Add/Edit Modal */}
                 <dialog id="discount_modal" className="modal">
                     <div className="modal-box bg-white max-w-2xl p-6">
@@ -585,7 +585,7 @@ export default function DiscountContent() {
                         />
                     </div>
                 )}
-            </div>
+            </>
         </section>
     );
 }

@@ -6,13 +6,13 @@ import { toast } from 'react-hot-toast';
 
 import Image from 'next/image';
 
-import { Banner } from '@/components/dashboard/super-admins/layout/home/lib/interface';
+import { Banner } from '@/components/dashboard/super-admins/layout/banner/lib/interface';
 
-import { bannerService } from '@/components/dashboard/super-admins/layout/home/lib/bannerService';
+import { bannerService } from '@/components/dashboard/super-admins/layout/banner/lib/bannerService';
 
-import HomeSkelaton from "@/components/dashboard/super-admins/layout/home/HomeSkelaton"
+import BannerSkelaton from "@/components/dashboard/super-admins/layout/banner/BannerSkelaton"
 
-export default function HomePage() {
+export default function BannerContent() {
     const [banners, setBanners] = useState<Banner[]>([]);
     const [filteredBanners, setFilteredBanners] = useState<Banner[]>([]);
     const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'inactive'>('all');
@@ -247,9 +247,9 @@ export default function HomePage() {
     return (
         <section className='min-h-full py-0 px-0 sm:py-4 sm:px-4'>
             {isLoading ? (
-                <HomeSkelaton />
+                <BannerSkelaton />
             ) : (
-                <div className="container">
+                <>
                     {/* Header Section */}
                     <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
                         <div className="flex gap-4 flex-col">
@@ -522,7 +522,7 @@ export default function HomePage() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </>
             )}
         </section>
     );
