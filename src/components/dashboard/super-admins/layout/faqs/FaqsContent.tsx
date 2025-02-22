@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 
+import toast from 'react-hot-toast';
+
 import { FAQ, FAQFormData } from '@/components/dashboard/super-admins/layout/faqs/lib/interface';
 
 import { faqService } from '@/components/dashboard/super-admins/layout/faqs/lib/faqsService';
@@ -34,6 +36,9 @@ export default function FaqsContent() {
     const [viewingFaq, setViewingFaq] = useState<FAQ | null>(null);
     const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
     const [expandedViewSteps, setExpandedViewSteps] = useState<Record<number, boolean>>({});
+    const [deleteId, setDeleteId] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         loadFAQs();
@@ -151,8 +156,10 @@ export default function FaqsContent() {
                 await faqService.updateFAQ(editingId, updatedFormData);
                 await loadFAQs();
             }
+            toast.success('Image uploaded successfully');
         } catch (error) {
             console.error('Error uploading image:', error);
+            toast.error('Failed to upload image');
         } finally {
             setImageUploading(false);
         }
@@ -172,9 +179,11 @@ export default function FaqsContent() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
         try {
             if (!formData.category || !formData.types.length) {
-                throw new Error("Please fill all required fields");
+                toast.error("Please fill all required fields");
+                return;
             }
 
             const processedTypes = formData.types.map(type => ({
@@ -194,23 +203,25 @@ export default function FaqsContent() {
 
             if (isEditing && editingId) {
                 await faqService.updateFAQ(editingId, finalFormData);
+                toast.success('FAQ updated successfully');
             } else {
                 await faqService.createFAQ(finalFormData);
+                toast.success('FAQ created successfully');
             }
 
-            await loadFAQs(); // Load FAQs terlebih dahulu
+            await loadFAQs();
 
-            // Tutup modal
             const modal = document.getElementById('faq_modal') as HTMLDialogElement;
             if (modal) {
                 modal.close();
             }
 
-            // Reset form setelah modal tertutup
             resetForm();
-
         } catch (error) {
             console.error('Error saving FAQ:', error);
+            toast.error('Failed to save FAQ');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -256,6 +267,25 @@ export default function FaqsContent() {
             ...prev,
             [faqId]: !prev[faqId]
         }));
+    };
+
+    const handleDelete = async () => {
+        if (!deleteId) return;
+
+        setIsDeleting(true);
+        try {
+            await faqService.deleteFAQ(deleteId);
+            toast.success('FAQ deleted successfully');
+            await loadFAQs();
+            setDeleteId(null);
+            const modal = document.getElementById('delete_modal') as HTMLDialogElement;
+            modal?.close();
+        } catch (error) {
+            console.error('Error deleting FAQ:', error);
+            toast.error('Failed to delete FAQ');
+        } finally {
+            setIsDeleting(false);
+        }
     };
 
     if (loading) {
@@ -471,9 +501,17 @@ export default function FaqsContent() {
                         <div className="modal-action flex gap-3 pt-6 border-t sticky bottom-0 bg-white">
                             <button
                                 type="submit"
-                                className="flex-1 md:flex-none px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-medium"
+                                disabled={isSubmitting}
+                                className="flex-1 md:flex-none px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-medium disabled:bg-blue-400 disabled:cursor-not-allowed"
                             >
-                                {isEditing ? 'Update FAQ' : 'Save FAQ'}
+                                {isSubmitting ? (
+                                    <span className="flex items-center gap-2">
+                                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                        {isEditing ? 'Updating...' : 'Saving...'}
+                                    </span>
+                                ) : (
+                                    isEditing ? 'Update FAQ' : 'Save FAQ'
+                                )}
                             </button>
                             <button
                                 type="button"
@@ -513,7 +551,11 @@ export default function FaqsContent() {
                                     <FiEdit className="w-4 h-4" />
                                 </button>
                                 <button
-                                    onClick={() => faqService.deleteFAQ(faq.id)}
+                                    onClick={() => {
+                                        setDeleteId(faq.id);
+                                        const modal = document.getElementById('delete_modal') as HTMLDialogElement;
+                                        modal?.showModal();
+                                    }}
                                     className="text-gray-400 hover:text-red-500"
                                 >
                                     <FiTrash2 className="w-4 h-4" />
@@ -676,6 +718,45 @@ export default function FaqsContent() {
                             </div>
                         </div>
                     )}
+                </div>
+                <form method="dialog" className="modal-backdrop bg-black/50">
+                    <button>close</button>
+                </form>
+            </dialog>
+
+            {/* Add Delete Confirmation Modal */}
+            <dialog id="delete_modal" className="modal">
+                <div className="modal-box bg-white p-6 rounded-lg max-w-md">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Confirm Delete</h3>
+                    <p className="text-gray-600 mb-6">
+                        Are you sure you want to delete this FAQ? This action cannot be undone.
+                    </p>
+                    <div className="modal-action flex gap-3">
+                        <button
+                            onClick={handleDelete}
+                            disabled={isDeleting}
+                            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200 disabled:bg-red-400 disabled:cursor-not-allowed"
+                        >
+                            {isDeleting ? (
+                                <span className="flex items-center gap-2">
+                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    Deleting...
+                                </span>
+                            ) : (
+                                'Delete'
+                            )}
+                        </button>
+                        <button
+                            onClick={() => {
+                                setDeleteId(null);
+                                const modal = document.getElementById('delete_modal') as HTMLDialogElement;
+                                modal?.close();
+                            }}
+                            className="px-4 py-2 border border-gray-300 hover:border-gray-400 rounded-lg transition-colors duration-200"
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </div>
                 <form method="dialog" className="modal-backdrop bg-black/50">
                     <button>close</button>

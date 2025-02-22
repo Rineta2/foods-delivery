@@ -1,4 +1,4 @@
-export interface Discount {
+export interface Faq {
   id: string;
   category: string;
   createdAt: string;

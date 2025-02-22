@@ -5,6 +5,7 @@ import Category from '@/components/ui/category/Category'
 import Brand from '@/components/ui/brand/Brand'
 import OrderingApps from '@/components/ui/ordering-apps/Ordering-apps'
 import Partner from '@/components/ui/partner/Partner'
+import Faqs from '@/components/ui/faqs/Faqs'
 
 export default function Router() {
     return (
@@ -15,6 +16,7 @@ export default function Router() {
             <Brand />
             <OrderingApps />
             <Partner />
+            <Faqs />
         </main>
     )
 }
