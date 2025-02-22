@@ -6,6 +6,7 @@ import Brand from '@/components/ui/brand/Brand'
 import OrderingApps from '@/components/ui/ordering-apps/Ordering-apps'
 import Partner from '@/components/ui/partner/Partner'
 import Faqs from '@/components/ui/faqs/Faqs'
+import Progress from '@/components/ui/progress/Progress'
 
 export default function Router() {
     return (
@@ -17,6 +18,7 @@ export default function Router() {
             <OrderingApps />
             <Partner />
             <Faqs />
+            <Progress />
         </main>
     )
 }
