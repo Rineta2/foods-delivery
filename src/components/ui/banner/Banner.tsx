@@ -81,7 +81,7 @@ export default function Banner() {
                                         alt={"banner"}
                                         quality={100}
                                         fill
-                                        className='w-full h-full object-fill'
+                                        className='w-full h-full object-cover sm:object-fill'
                                         priority
                                     />
                                 </div>

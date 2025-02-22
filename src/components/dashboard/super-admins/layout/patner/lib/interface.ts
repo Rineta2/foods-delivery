@@ -2,13 +2,14 @@ export interface Partner {
   id: string;
   imageUrl: string;
   title: string;
-  category: "partner" | "ride"; // 'partner' for Partner with Us, 'ride' for Ride with Us
+  category: "partner" | "ride";
   buttonText: string;
   link: string;
   isActive: boolean;
   createdAt: string;
   updatedAt?: string;
   text: string;
+  description: string;
 }
 
 export interface PartnerFormData {
@@ -19,4 +20,5 @@ export interface PartnerFormData {
   link: string;
   isActive: boolean;
   text: string;
+  description: string;
 }

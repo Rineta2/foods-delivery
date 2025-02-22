@@ -9,6 +9,7 @@ import { Discount as DiscountType } from '@/components/ui/discount/lib/interface
 import { fetchDiscounts } from '@/components/ui/discount/lib/discountService'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Discount() {
     const [discounts, setDiscounts] = useState<DiscountType[]>([])
@@ -70,7 +71,7 @@ export default function Discount() {
 
                 <div className='flex sm:grid sm:grid-cols-3 gap-2 mt-10 xl:mt-16 overflow-x-auto pb-6 snap-x snap-mandatory'>
                     {filteredDiscounts.map((discount) => (
-                        <div
+                        <Link href={`/discount/${discount.id}`}
                             className="category__filter__item relative rounded-lg overflow-hidden flex-shrink-0 sm:w-full w-[280px] snap-start"
                             key={discount.id}
                         >
@@ -93,7 +94,7 @@ export default function Discount() {
                                     <span className='text-white text-sm font-bold'>-{discount.discountAmount}%</span>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

@@ -10,6 +10,8 @@ import { FetchBrands } from '@/components/ui/brand/lib/brand'
 
 import { Brand as BrandType } from '@/components/ui/brand/lib/interface'
 
+import Link from 'next/link'
+
 export default function Brand() {
     const [brands, setBrands] = useState<BrandType[]>([])
     const [loading, setLoading] = useState(true)
@@ -41,13 +43,14 @@ export default function Brand() {
                     </h2>
                 </div>
 
-                <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-4 mt-6 md:mt-10'>
+                <div className='flex sm:grid sm:grid-cols-3 xl:grid-cols-6 gap-2 mt-10 xl:mt-16 overflow-x-auto pb-6 snap-x snap-mandatory'>
                     {brands.map((brand) => (
-                        <div
-                            className="relative rounded-lg w-full overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                        <Link
+                            href={`/brand/${brand.id}`}
+                            className="category__filter__item relative rounded-lg overflow-hidden flex-shrink-0 sm:w-full w-[180px] snap-start"
                             key={brand.id}
                         >
-                            <div className='w-full aspect-[4/3] relative'>
+                            <div className='w-full h-[150px] sm:h-[200px] relative'>
                                 <Image
                                     src={brand.imageUrl}
                                     alt={brand.title}
@@ -59,7 +62,7 @@ export default function Brand() {
                             <div className='w-full bg-primary p-3 md:p-4'>
                                 <h3 className='text-background text-base font-bold line-clamp-2'>{brand.title}</h3>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

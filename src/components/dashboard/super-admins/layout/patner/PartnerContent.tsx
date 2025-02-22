@@ -33,6 +33,7 @@ export default function PartnerContent() {
     const [link, setLink] = useState<string>('#');
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6); // Show 6 items per page
+    const [description, setDescription] = useState<string>('');
 
     useEffect(() => {
         loadPartners();
@@ -167,9 +168,10 @@ export default function PartnerContent() {
                         title,
                         text,
                         isActive: newPartnerStatus,
-                        category: 'partner',
-                        buttonText: editingPartner.buttonText || 'Partner with Us',
-                        link: editingPartner.link || '#'
+                        category,
+                        buttonText,
+                        link,
+                        description
                     });
                 } else {
                     await partnerService.updatePartner(editingPartner.id, {
@@ -177,9 +179,10 @@ export default function PartnerContent() {
                         title,
                         text,
                         isActive: newPartnerStatus,
-                        category: editingPartner.category,
-                        buttonText: editingPartner.buttonText,
-                        link: editingPartner.link
+                        category,
+                        buttonText,
+                        link,
+                        description
                     });
                 }
             } else {
@@ -196,6 +199,7 @@ export default function PartnerContent() {
                     buttonText,
                     link,
                     text,
+                    description,
                 });
             }
             await loadPartners();
@@ -214,9 +218,10 @@ export default function PartnerContent() {
         setTitle(partner.title);
         setPreviewImage(partner.imageUrl);
         setText(partner.text);
-        setCategory(partner.category || 'partner');
+        setCategory(partner.category as 'partner' | 'ride');
         setButtonText(partner.buttonText || 'Partner with Us');
         setLink(partner.link || '#');
+        setDescription(partner.description || '');
         setNewPartnerStatus(partner.isActive);
         const modal = document.getElementById('brand_modal');
         if (modal) {
@@ -277,6 +282,7 @@ export default function PartnerContent() {
         setLink('#');
         setEditingPartner(null);
         setPartnerToDelete(null);
+        setDescription('');
     };
 
     if (isLoading) {
@@ -301,6 +307,7 @@ export default function PartnerContent() {
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                 </select>
+
                                 <span className="text-sm text-gray-500">
                                     {filteredPartners.length} partners found
                                 </span>
@@ -419,6 +426,7 @@ export default function PartnerContent() {
                             <h3 className="text-xl font-semibold text-gray-800">
                                 {editingPartner ? 'Edit Partner' : 'Add New Partner'}
                             </h3>
+
                             <button
                                 onClick={closeModal}
                                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -494,6 +502,18 @@ export default function PartnerContent() {
                                     </div>
 
                                     <div className="flex flex-col gap-1">
+                                        <label className="text-sm font-medium text-gray-700">Description</label>
+                                        <input
+                                            type="text"
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            className="input input-bordered w-full"
+                                            placeholder="Enter description"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="flex flex-col gap-1">
                                         <label className="text-sm font-medium text-gray-700">Text</label>
                                         <input
                                             type="text"
@@ -501,6 +521,7 @@ export default function PartnerContent() {
                                             onChange={(e) => setText(e.target.value)}
                                             className="input input-bordered w-full"
                                             placeholder="Enter text"
+                                            required
                                         />
                                     </div>
 
